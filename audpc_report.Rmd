@@ -1,0 +1,63 @@
+---
+title: "AUDPC Analysis"
+date: "July 5, 2016"
+output: pdf_document
+---
+
+## Background
+
+Rmarkdown is great for combining code and notes into cohesive reports on analyses.
+In this example, I will be using data found on [this tutorial](http://www.apsnet.org/edcenter/advanced/topics/EcologyAndEpidemiologyInR/DiseaseProgress/Pages/StripeRust.aspx) to explore the effects of wheat cultivar and fungicide treatment on the incidence of disease caused by *Puccinia striiformis* (stripe rust).
+I will do this by comparing the **AUDPC** (area under disease progress curve) for the three cultivars and two fungicide treatments.
+
+## Analysis
+
+To accomplish this, I will do the following:
+
+1. Parse the file using `read.csv`
+1. Tidy up the data using `reshape2` and `dplyr` functions
+1. Graph the data using `ggplot2`
+
+### Parse data set
+
+```{r}
+data <- read.csv("fungicide_example.csv")
+```
+
+
+### Tidy up data set
+
+More information on "Tidy" data can be found [here](http://vita.had.co.nz/papers/tidy-data.pdf).
+
+```{r, message = FALSE}
+library('dplyr')
+library('reshape2')
+long_data <- data %>% 
+  melt(id.vars = "Julian.Date", value.name = "disease") %>%            # long form
+  mutate(fungicide = grepl(pattern = "\\.[Tt]rt$", variable)) %>%      # add fungicide column
+  transform(fungicide = ifelse(fungicide, "treated", "untreated")) %>% # make it sensible
+  transform(variable = gsub("\\.[Tt]rt$", "", variable))               # clean up the variable
+```
+
+Lets see what the data set looks like after reformatting:
+
+```{r}
+head(long_data)
+```
+
+
+
+### Graph AUDPC
+
+```{r}
+library('ggplot2')
+ggplot(long_data) + 
+  geom_line(aes(x = Julian.Date, y = disease, color = fungicide)) + 
+  facet_wrap(~variable)
+```
+
+
+## Conclusions
+
+In general, the AUDPC only changes between the fungicide treatments during the last 10 days of the experiment. 
+The "Cutter" seemed to be most resistant to the disease followed by "2137" and "Jagger". 
