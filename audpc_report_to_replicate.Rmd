@@ -32,7 +32,7 @@ library('magrittr')  # Adds %>% operator for chaining commands
 ### Parse input file
 
 ```{r}
-data <- read.csv("fungicide_example.csv")
+data <- read.csv("fungicide_data.csv")
 kable(data[, 1:3]) # make a table of first 3 columns
 ```
 
@@ -54,12 +54,12 @@ kable(long_data[1:15, ]) # make a table of first 5 rows
 The disease was first detected in all treatments on Julian day 140 (May 19) and continued to rise until the end of the study in all treatments.
 
 ```{r, echo = FALSE, fig.width=9}
-g <- ggplot(long_data)
-g <- g + geom_line(aes(x = Julian.Date, y = disease, linetype = cultivar))
-g <- g + facet_wrap(~fungicide)
-g <- g + theme_bw()
-g <- g + labs(x = "Julian Day", y = "Percent Disease", title = "Disease Progress Curve")
-g
+dis_plot <- ggplot(long_data)
+dis_plot <- dis_plot + geom_line(aes(x = Julian.Date, y = disease, linetype = cultivar))
+dis_plot <- dis_plot + facet_wrap(~fungicide)
+dis_plot <- dis_plot + theme_bw()
+dis_plot <- dis_plot + labs(x = "Julian Day", y = "Percent Disease", title = "Disease Progress Curve")
+dis_plot
 ```
 
 

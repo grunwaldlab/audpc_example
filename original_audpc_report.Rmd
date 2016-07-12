@@ -45,7 +45,7 @@ library('knitr')
 library('ggplot2')
 library('magrittr')
 
-data <- read.csv("http://www.apsnet.org/edcenter/advanced/topics/EcologyAndEpidemiologyInR/DiseaseProgress/Documents/FungicideExample.csv")
+data <- read.csv("fungicide_data.csv")
 
 long_data <- data %>% 
   gather(cultivar, disease, -Julian.Date) %>% # gather by cultivar, call the new variable disease, and keep the Julian.Date column
