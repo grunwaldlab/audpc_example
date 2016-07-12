@@ -14,7 +14,7 @@ It can cause up to 40% loss of crop yields and seems to be adapting to warmer te
 
 ## Analysis
 
-I will be using data found on [this tutorial](http://www.apsnet.org/edcenter/advanced/topics/EcologyAndEpidemiologyInR/DiseaseProgress/Pages/StripeRust.aspx) to explore the effects of wheat cultivar and fungicide treatment on the incidence of disease caused by *Puccinia striiformis*.
+I will be using data found on **[this tutorial](http://www.apsnet.org/edcenter/advanced/topics/EcologyAndEpidemiologyInR/DiseaseProgress/Pages/StripeRust.aspx)** to explore the effects of wheat cultivar and fungicide treatment on the incidence of disease caused by *Puccinia striiformis*.
  I will do this by comparing the **AUDPC** (area under disease progress curve) for the three cultivars and two fungicide treatments.
 
 ### Load packages
