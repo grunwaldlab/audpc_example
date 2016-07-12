@@ -1,6 +1,6 @@
 ---
 title: "AUDPC Analysis"
-output: pdf_document
+output: html_document
 date: "July 5, 2016"
 ---
 
@@ -12,10 +12,13 @@ Spores are dispersed by wind, sometimes very far, and infect more wheat or other
 It can cause up to 40% loss of crop yields and seems to be adapting to warmer temperatures and resistant varieties of wheat.
 *Puccinia striiformis* was first found in Australia but has since spread world wide.
 
-## Analysis
-
-I will be using data found on **[this tutorial](http://www.apsnet.org/edcenter/advanced/topics/EcologyAndEpidemiologyInR/DiseaseProgress/Pages/StripeRust.aspx)** to explore the effects of wheat cultivar and fungicide treatment on the incidence of disease caused by *Puccinia striiformis*.
+I will be using data found on [this tutorial](http://www.apsnet.org/edcenter/advanced/topics/EcologyAndEpidemiologyInR/DiseaseProgress/Pages/StripeRust.aspx) to explore the effects of wheat cultivar and fungicide treatment on the incidence of disease caused by *Puccinia striiformis*.
  I will do this by comparing the **AUDPC** (area under disease progress curve) for the three cultivars and two fungicide treatments.
+
+![](stripe_rust.jpg)
+
+
+## Analysis
 
 ### Load packages
 
