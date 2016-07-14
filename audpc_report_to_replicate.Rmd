@@ -85,7 +85,7 @@ audpc_data %>%
 
 ### Graph AUDPC results
 
-In general, "Jaggar" is the most susceptible and "Cutter" is the least.
+In general, Jagger is the most susceptible and Cutter is the least.
 The incidence of disease for all cultivars was less when treated with fungicides.
 
 ```{r fig.width=9}
@@ -116,6 +116,6 @@ The disease progress curves on the first graph show a stall in the increase of d
 
 ## Conclusions
 
-In general, the AUDPC only changes between the fungicide treatments during the last 20 days of the experiment. 
+In general, the disease progress curves only differ between treated with fungicide and untreated during the last 20 days of the experiment. 
 The Cutter seemed to be more resistant than 2137 and Jagger was susceptible, as expected. 
 The results suggest that using Cutter wheat without fungicide is equivalent to using Jagger with fungicide, but the best yields will be obtained when Cutter wheat treated with fungicide is used.
