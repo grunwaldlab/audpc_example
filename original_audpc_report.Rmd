@@ -12,13 +12,13 @@ opts_chunk$set(echo = FALSE, message = FALSE, fig.width = 9)
 
 ## Background
 
-Stripe rust of wheat is caused by a basidiomycete pathogen called *Puccinia striiformis*.
+Stripe rust of wheat is caused by a basidiomycete pathogen called *Puccinia triticina*.
 Parallel lines of pustules form on the leaves of wheat plants, releasing enormous numbers of spores, especially when it is cool and humid.
 Spores are dispersed by wind, sometimes very far, and infect more wheat or other grass hosts.
-It can cause up to 40% loss of crop yields and seems to be adapting to warmer temperatures and resistant varieties of wheat.
-*Puccinia striiformis* was first found in Australia but has since spread world wide.
+It can cause up to 50% loss of crop yields and seems to be adapting to warmer temperatures and resistant varieties of wheat.
+This disease is typically controlled using resistance, but fungicides also work. 
 
-I will be using data found on [this tutorial](http://www.apsnet.org/edcenter/advanced/topics/EcologyAndEpidemiologyInR/DiseaseProgress/Pages/StripeRust.aspx) to explore the effects of wheat cultivar and fungicide treatment on the incidence of disease caused by *Puccinia striiformis*.
+I will be using data found on [this tutorial](http://www.apsnet.org/edcenter/advanced/topics/EcologyAndEpidemiologyInR/DiseaseProgress/Pages/StripeRust.aspx) to explore the effects of wheat cultivar and fungicide treatment on the incidence of disease caused by *Puccinia triticina*.
  I will do this by comparing the **AUDPC** (area under disease progress curve) for the three cultivars and two fungicide treatments.
 
 ![](stripe_rust.jpg)
@@ -26,7 +26,7 @@ I will be using data found on [this tutorial](http://www.apsnet.org/edcenter/adv
 
 ## Methods
 
-I will use the R script called `audpc_code.R` to do the following:
+I will use the R script called `original_audpc_code.R` to do the following:
 
 1. Parse the file using `read.csv`
 1. Tidy up the data using `reshape2` and `dplyr` functions
@@ -66,9 +66,10 @@ g <- g + labs(x = "Julian Day", y = "Percent Disease", title = "Disease Progress
 g
 ```
 
+
 #### AUDPC
 
-In general, "Jaggar" is the most susceptible and "Cutter" is the least.
+In general, Jagger is the most susceptible and Cutter is the least.
 The incidence of disease for all cultivars was less when treated with fungicides.
 
 ```{r}
@@ -88,8 +89,24 @@ audpc_plot
 ```
 
 
+## Questions
+
+The following questions were posed in the [exercise on the APS website](http://www.apsnet.org/edcenter/advanced/topics/EcologyAndEpidemiologyInR/DiseaseProgress/Pages/StripeRust.aspx):
+
+> How does the size of the fungicide effect compare to the effect of resistance? 
+
+Examining the second figure, it appears that the application of fungicide reduces disease severity by about 40% on average. The effect size of resistance is similar. 
+
+> Would it be the same as resistance?
+
+While the average percent reduction of disease severity from fungicide and resistance are similar, whether fungicide applied to a susceptible variety (Jagger) would be equivalent to fungicide not applied to a resistant variety depends on the resistant variety used; untreated, Cutter (resistant) shows less disease severity than treated Jagger (susceptible), but untreated 2137 (resistant) has higher disease severity than treated Jagger.  
+
+> Since the fungicide typically is only active for two weeks after application, after looking at your graph, when do you think the fungicide was applied?
+
+The disease progress curves on the first graph show a stall in the increase of disease incidence after day 140 that is not present in the curves for untreated wheat. This suggest that fungicide was applied around day 140, although the exact day is hard to tell since disease incidence was recorded weekly.  
+
 ## Conclusions
 
-In general, the AUDPC only changes between the fungicide treatments during the last 10 days of the experiment. 
-The "Cutter" seemed to be most resistant to the disease followed by "2137" and "Jagger". 
-The results suggest that the best yields will be obtained when "Cutter" wheat is used and it is treated with fungicide.
+In general, the AUDPC only changes between the fungicide treatments during the last 20 days of the experiment. 
+The Cutter seemed to be more resistant than 2137 and Jagger was susceptible, as expected. 
+The results suggest that using Cutter wheat without fungicide is equivalent to using Jagger with fungicide, but the best yields will be obtained when Cutter wheat treated with fungicide is used.

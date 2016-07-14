@@ -6,13 +6,13 @@ date: "July 5, 2016"
 
 ## Background
 
-Stripe rust of wheat is caused by a basidiomycete pathogen called *Puccinia striiformis*.
+Stripe rust of wheat is caused by a basidiomycete pathogen called *Puccinia triticina*.
 Parallel lines of pustules form on the leaves of wheat plants, releasing enormous numbers of spores, especially when it is cool and humid.
 Spores are dispersed by wind, sometimes very far, and infect more wheat or other grass hosts.
-It can cause up to 40% loss of crop yields and seems to be adapting to warmer temperatures and resistant varieties of wheat.
-*Puccinia striiformis* was first found in Australia but has since spread world wide.
+It can cause up to 50% loss of crop yields and seems to be adapting to warmer temperatures and resistant varieties of wheat.
+This disease is typically controlled using resistance, but fungicides also work. 
 
-I will be using data found on [this tutorial](http://www.apsnet.org/edcenter/advanced/topics/EcologyAndEpidemiologyInR/DiseaseProgress/Pages/StripeRust.aspx) to explore the effects of wheat cultivar and fungicide treatment on the incidence of disease caused by *Puccinia striiformis*.
+I will be using data found on [this tutorial](http://www.apsnet.org/edcenter/advanced/topics/EcologyAndEpidemiologyInR/DiseaseProgress/Pages/StripeRust.aspx) to explore the effects of wheat cultivar and fungicide treatment on the incidence of disease caused by *Puccinia triticina*.
  I will do this by comparing the **AUDPC** (area under disease progress curve) for the three cultivars and two fungicide treatments.
 
 ![](stripe_rust.jpg)
@@ -22,7 +22,7 @@ I will be using data found on [this tutorial](http://www.apsnet.org/edcenter/adv
 
 ### Load packages
 
-```{r, message = FALSE}
+```{r message = FALSE}
 library('knitr')     # Used to make tables 
 library('dplyr')     # Used for data.frame manipulations
 library('tidyr')     # Used for data.frame manipulations
@@ -48,7 +48,7 @@ long_data <- data %>%
   mutate(fungicide = grepl(pattern = "\\.trt$", cultivar, ignore.case = TRUE)) %>% 
   transform(fungicide = ifelse(fungicide, "treated", "untreated")) %>% 
   transform(cultivar = gsub("\\.trt$", "", cultivar, ignore.case = TRUE)) 
-kable(long_data[1:15, ]) # make a table of first 5 rows
+kable(long_data[1:15, ]) # make a table of first 15 rows
 ```
 
 
@@ -56,7 +56,7 @@ kable(long_data[1:15, ]) # make a table of first 5 rows
 
 The disease was first detected in all treatments on Julian day 140 (May 19) and continued to rise until the end of the study in all treatments.
 
-```{r, echo = FALSE, fig.width=9}
+```{r fig.width=9}
 dis_plot <- ggplot(long_data)
 dis_plot <- dis_plot + geom_line(aes(x = Julian.Date, y = disease, linetype = cultivar))
 dis_plot <- dis_plot + facet_wrap(~fungicide)
@@ -74,7 +74,7 @@ audpc_data <- long_data %>%
   summarize(AUDPC = audpc(disease, Julian.Date))
 ```
 
-```{r, echo = FALSE}
+```{r}
 audpc_data %>% 
   spread(fungicide, AUDPC) %>% # create a table with fungicide in columns and cultivar in rows
   arrange(untreated) %>%       # Sort by untreated
@@ -88,20 +88,34 @@ audpc_data %>%
 In general, "Jaggar" is the most susceptible and "Cutter" is the least.
 The incidence of disease for all cultivars was less when treated with fungicides.
 
-```{r, echo = FALSE, fig.width=9}
+```{r fig.width=9}
 audpc_plot <- ggplot(audpc_data, aes(x = fungicide, y = AUDPC, fill = cultivar))
 audpc_plot <- audpc_plot + geom_bar(stat = "identity", position = "dodge")
 audpc_plot <- audpc_plot + theme_bw()
 audpc_plot <- audpc_plot + labs(title = "Area Under the Disease Progress Curve")
-# for color, uncomment the line below
-# audpc_plot <- audpc_plot + scale_fill_brewer(type = "qual", palette = "Set1")
 audpc_plot <- audpc_plot + scale_fill_grey()
 audpc_plot
 ```
 
 
+## Questions
+
+The following questions were posed in the [exercise on the APS website](http://www.apsnet.org/edcenter/advanced/topics/EcologyAndEpidemiologyInR/DiseaseProgress/Pages/StripeRust.aspx):
+
+> How does the size of the fungicide effect compare to the effect of resistance? 
+
+Examining the second figure, it appears that the application of fungicide reduces disease severity by about 40% on average. The effect size of resistance is similar. 
+
+> Would it be the same as resistance?
+
+While the average percent reduction of disease severity from fungicide and resistance are similar, whether fungicide applied to a susceptible variety (Jagger) would be equivalent to fungicide not applied to a resistant variety depends on the resistant variety used; untreated, Cutter (resistant) shows less disease severity than treated Jagger (susceptible), but untreated 2137 (resistant) has higher disease severity than treated Jagger.  
+
+> Since the fungicide typically is only active for two weeks after application, after looking at your graph, when do you think the fungicide was applied?
+
+The disease progress curves on the first graph show a stall in the increase of disease incidence after day 140 that is not present in the curves for untreated wheat. This suggest that fungicide was applied around day 140, although the exact day is hard to tell since disease incidence was recorded weekly.  
+
 ## Conclusions
 
-In general, the AUDPC only changes between the fungicide treatments during the last 10 days of the experiment. 
-The "Cutter" seemed to be most resistant to the disease followed by "2137" and "Jagger". 
-The results suggest that the best yields will be obtained when "Cutter" wheat is used and it is treated with fungicide.
+In general, the AUDPC only changes between the fungicide treatments during the last 20 days of the experiment. 
+The Cutter seemed to be more resistant than 2137 and Jagger was susceptible, as expected. 
+The results suggest that using Cutter wheat without fungicide is equivalent to using Jagger with fungicide, but the best yields will be obtained when Cutter wheat treated with fungicide is used.
